@@ -11,7 +11,7 @@
     "build-storybook": "build-storybook"
   },
   "keywords": [],
-  "author": "",
+  "author": "<danyaponommaly@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.10.5",
@@ -64,10 +64,13 @@
   "dependencies": {
     "normalize.css": "^8.0.1",
     "promptly": "^3.0.3",
+    "pub": "^0.2.0",
     "pug": "^3.0.2",
     "request": "^2.88.0",
     "signale": "^1.4.0",
     "vue": "^2.6.7",
-    "vue-router": "^3.0.2"
-  }
+    "vue-router": "^3.0.2",
+    "yarn": "^1.22.10"
+  },
+  "repository": "git@github.com:DaniilNiceUnrock/VJS.git"
 }
