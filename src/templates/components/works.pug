@@ -5,13 +5,14 @@ script(type="text/x-template")#preview-container
             :currentWork = "currentWork"
             :works="works"
             @slide="slide"
+            :currentSlideData = "currentSlideData"
         )
         info(
             :currentWork = "currentWork"
         )     
 
 script(type="text/x-template")#preview-display
-    .works-preview__pictures(data-slide="2")
+    .works-preview__pictures(:data-slide="currentSlideData.id + 1")
         img(:src="currentWork.photo").works-preview__img
         .works-preview__thumbs 
             thumbs( 
@@ -25,7 +26,6 @@ script(type="text/x-template")#preview-display
                
 script(type="text/x-template")#preview-thumbs
     ul.thumb
-        //-pre {{works}}
         li.thumb__item(v-for="slide in works" :key="slide.id") 
             a(href="#").thumbs__link(:class="{active: currentWork.id === slide.id}")
                 img(:src="slide.photo").thumbs__pic
@@ -46,7 +46,9 @@ script(type="text/x-template")#preview-btns
 script(type="text/x-template")#preview-info
     .works-preview__info           
         .works-preview__tags
-            tags
+            tags(
+                :tags = "tagsArray"
+            )
         .works-preview__title  {{currentWork.title}}
         .works-preview__desc 
             p {{currentWork.desc}}
@@ -54,9 +56,6 @@ script(type="text/x-template")#preview-info
             +image(`content/site.png`, "")  
 
 script(type="text/x-template")#preview-tags
-    - var tags = ["HTML", "CSS ", "JavaScript"]
     ul.tags 
-        each item in tags
-            li.tags__item 
-                .tag #{item}
-
+        li.tags__item(v-for="tag in tags")
+            tag {{tag}}
