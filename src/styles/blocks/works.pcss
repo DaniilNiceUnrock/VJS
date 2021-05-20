@@ -51,6 +51,7 @@
         line-height: 1;
         font-size: 400px;
         right: 0;
+        z-index: -1;
         font-weight: 800;
         color: rgba($text-color, .5);
         transform: translateX(50%);
@@ -94,12 +95,18 @@
 }
 .thumb__item   {
     width: 178px;
-    height: 111px;
+    //height: 111px;
 }
 .thumbs__link {
     position: relative;
     display: block;
     transition: all .1s ease;
+}
+.thumbs__link.active {
+    border: 3px solid orange;
+}
+.thumbs__link:HOVER {
+    border: 3px solid orange;
 }
 .thumbs__pic {
     width: 100%;
@@ -162,4 +169,11 @@ svg.icon.arrow-top {
     fill: rgba(113, 120, 131, 1);
     width: 19px;
     height: 11px;
+}
+
+svg.icon.arrow-down:hover {
+    fill: #fff;
+}
+svg.icon.arrow-top:hover {
+    fill: #fff;
 }

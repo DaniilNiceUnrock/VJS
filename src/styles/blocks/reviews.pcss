@@ -22,8 +22,11 @@
 
 section.reviews {
     background: url("~images/bg/Budda.jpg") 100% 100% no-repeat;
+    background-position: top;
     background-size: cover;
-    height: 73vh;
+    height: auto;
+    margin-top: -0px;
+    height: 100vh;
 }
 .slider__item {
     list-style: none;
@@ -72,6 +75,10 @@ section.reviews {
 .slider__buttons {
     align-self: center;
 }
+.round-btn {
+    border: 1px solid #414c63!important;
+    background: hsla(0,0%,100%,.75);
+}
 .round-btn.round-btn--pointer--right{
     top: 50%;
     width: 2.75rem;
@@ -115,4 +122,21 @@ section.reviews {
 }
 .user-display__avatar {
     display: inline-block;
+}
+.icon.arrow-right {
+    width: 20%!important;
+    height: 20%!important;
+    left: 40%!important;
+    top: 40%!important;
+    position: absolute;
+}
+.icon.arrow-left {
+    width: 20%!important;
+    height: 20%!important;
+    left: 40%!important;
+    top: 40%!important;
+    position: absolute;
+}
+button.slider__btn.round-btn:hover {
+    background: #fff;
 }

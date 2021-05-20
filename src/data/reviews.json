@@ -1,0 +1,44 @@
+[
+  {
+    "id": 0,
+    "text": "This guy did not study web development somewhere, but at LoftSchool! 2 months of only the most difficult trials and sleepless nights!",
+    "name": "Dmitry Kovalchuk",
+    "occ": "Founder of Loftschool",
+    "pic": "Dmitriy.png"
+  },
+  {
+    "id": 1,
+    "text": "This code will stand up to any test. Please do not load the site on too old browsers.",
+    "name": "Vladimir Sabantsev",
+    "occ": "Coach",
+    "pic": "Vladimir.png"
+  },
+  {
+    "id": 2,
+    "text": "This guy did not study web development somewhere, but at LoftSchool! 2 months of only the most difficult trials and sleepless nights!",
+    "name": "Dmitry Kovalchuk",
+    "occ": "Founder of Loftschool",
+    "pic": "Dmitriy.png"
+  },
+  {
+    "id": 3,
+    "text": "This code will stand up to any test. Please do not load the site on too old browsers.",
+    "name": "Vladimir Sabantsev",
+    "occ": "Coach",
+    "pic": "Vladimir.png"
+  },
+  {
+    "id": 4,
+    "text": "This guy did not study web development somewhere, but at LoftSchool! 2 months of only the most difficult trials and sleepless nights!",
+    "name": "Dmitry Kovalchuk",
+    "occ": "Founder of Loftschool",
+    "pic": "Dmitriy.png"
+  },
+  {
+    "id": 5,
+    "text": "This code will stand up to any test. Please do not load the site on too old browsers.",
+    "name": "Vladimir Sabantsev",
+    "occ": "Coach",
+    "pic": "Vladimir.png"
+  }
+]
