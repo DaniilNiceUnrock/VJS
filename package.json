@@ -68,8 +68,11 @@
     "pug": "^3.0.2",
     "request": "^2.88.0",
     "signale": "^1.4.0",
+    "swiper": "^6.6.2",
     "vue": "^2.6.7",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "^3.0.2",
+    "vue-scrollto": "^2.20.0",
     "yarn": "^1.22.10"
   },
   "repository": "git@github.com:DaniilNiceUnrock/VJS.git"

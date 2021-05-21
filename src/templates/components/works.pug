@@ -27,7 +27,7 @@ script(type="text/x-template")#preview-display
 script(type="text/x-template")#preview-thumbs
     ul.thumb
         li.thumb__item(v-for="slide in works" :key="slide.id") 
-            a(href="#").thumbs__link(:class="{active: currentWork.id === slide.id}")
+            button.thumbs__link(:class="{active: currentWork.id == slide.id}")
                 img(:src="slide.photo").thumbs__pic
 
 script(type="text/x-template")#preview-btns
@@ -52,10 +52,10 @@ script(type="text/x-template")#preview-info
         .works-preview__title  {{currentWork.title}}
         .works-preview__desc 
             p {{currentWork.desc}}
-        a(:href="currentWork.link").iconed-link  Посмотреть сайт 
+        a(:href="currentWork.link" target="_blank").iconed-link  Посмотреть сайт 
             +image(`content/site.png`, "")  
 
 script(type="text/x-template")#preview-tags
     ul.tags 
         li.tags__item(v-for="tag in tags")
-            tag {{tag}}
+            p {{tag}}

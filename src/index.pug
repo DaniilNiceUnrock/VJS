@@ -1,7 +1,7 @@
 extends ./main.layout.pug
 
 block content
-    .welcome-section 
+    .welcome-section(id = "welcome")
         section.hero 
             .container.hero__container
                 header.header 
@@ -26,8 +26,9 @@ block content
                     .userinfo__name Daniil #[br] Ponomarev
 
                 .hero__bottom-buttons   
-                    button.scrooll-down-btn Скролл
-        section.about 
+                    a(href="#").scrooll-down-btn Скролл
+                    
+        section.about(id="about") 
             .container.about__container 
                 .about__user
                     .user 
@@ -79,41 +80,9 @@ block content
                                     polygon(points="0,0  0,100 1000,100")
                                 svg(viewBox="0 0 1000 100" preserveAspectRatio="none").triangles__shape.triangles__shape--position-right
                                     polygon(points="0,100  1000,100 1000,0")
-    section.reviews
-            .container 
-                .slider 
-                    .slider__header 
-                        .section-title Что  обо мне говорят
-                        .slider__buttons 
-                            button(type="button").slider__btn.round-btn.round-btn--pointer--right
-                                +icon('arrow-left', 'icon arrow-left')
-                            button(type="button").slider__btn.round-btn.round-btn--pointer--left
-                                +icon('arrow-right', 'icon arrow-right')
-                ul.slider__content 
-                    li.slider__item 
-                        .quote  
-                            .quote__text
-                                p Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
-                            .quote__user
-                                .user__display
-                                    .user-display__avatar
-                                        .user-display__avatar-style 
-                                            +image("content/user.jpg", "user-display__pic")
-                                    .user-display__data
-                                        .user-display__name Дмитрий ковальчук
-                                        .user-display__occ Основатель Loftschool  
-                    li.slider__item 
-                        .quote  
-                            .quote__text
-                                p Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
-                            .quote__user
-                                .user__display
-                                    .user-display__avatar
-                                        .user-display__avatar-style 
-                                            +image("content/user.jpg", "user-display__pic")
-                                    .user-display__data
-                                        .user-display__name Дмитрий ковальчук
-                                        .user-display__occ Основатель Loftschool  
+    section.reviews(id="reviews")
+        .container 
+            #slider-component
 
     footer.footer
         .container
