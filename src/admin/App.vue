@@ -4,6 +4,28 @@
       <user />
       </headline>
       <navigation />
+      <div class="page-content">
+        <div class="container">
+          <div class="header">
+            <div class="title"> Блок "Обо мне"</div>
+            <iconed-button type="iconed"  title="Добавить в группу" />
+          </div>
+          <ul class="skills">
+            <li class="item">
+              <category />
+            </li>
+            <li class="item">
+              <category />
+            </li>
+            <li class="item">
+              <category />
+            </li>
+          </ul>
+          <skill />
+          <category  />
+        </div>
+      </div>
+      
   </div>
 </template>
 
@@ -14,13 +36,19 @@
 import headline from "./components/headline";
 import user from "./components/user";
 import navigation from "./components/navigation";
+import button from "./components/button";
+import category from "./components/category";
+
+
 
 
 export default {
   components: {
     headline,
     user,
-    navigation
+    navigation,
+    iconedButton: button,
+    category
   },
 };
 </script>
