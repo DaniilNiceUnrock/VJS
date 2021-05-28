@@ -8,24 +8,19 @@
         <div class="container">
           <div class="header">
             <div class="title"> Блок "Обо мне"</div>
-            <iconed-button type="iconed"  title="Добавить в группу" />
+            <iconed-button type="iconed" v-if="emptyCatIsShow === false" @click="emptyCatIsShow = true" title="Добавить в группу" />
           </div>
           <ul class="skills">
-            <li class="item">
-              <category />
+            <li class="item" v-if="emptyCatIsShow">
+              <category @remove="emptyCatIsShow = false" empty />
             </li>
-            <li class="item">
-              <category />
+            <li class="item" v-for="category in categories" :key="category.id">
+              <category :title="category.category" :skills="category.skills"/>
             </li>
-            <li class="item">
-              <category />
-            </li>
+
           </ul>
-          <skill />
-          <category  />
         </div>
       </div>
-      
   </div>
 </template>
 
@@ -50,6 +45,15 @@ export default {
     iconedButton: button,
     category
   },
+  data() {
+    return {
+      categories: [],
+      emptyCatIsShow: false
+    }
+  },
+  created() {
+    this.categories = require("./data/categories.json");
+  }
 };
 </script>
 

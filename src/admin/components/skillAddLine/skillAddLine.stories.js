@@ -1,13 +1,15 @@
-import skillAddLine  from "./skillAddLine"
+import skillAddLine from "./skillAddLine.vue";
 
 export default {
-    title: "skillAddLine",
-    components: {skillAddLine}
-}
+  title: "skillAddLine",
+  component: skillAddLine,
+};
 
-export const defaultViev = () => ({
-    components: {skillAddLine},
-    template: `
-        <skill-add-line />
-  `
-})
+export const defaultView = () => ({
+  components: { skillAddLine },
+  template: `
+    <skillAddLine>
+      
+    </skillAddLine>
+  `,
+});

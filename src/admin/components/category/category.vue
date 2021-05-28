@@ -1,11 +1,16 @@
 <template>
   <card slim>
-    <edit-line slot="title" v-model="title" editModeByDefault/>
-    <ul class="skills" slot="content">
-      <li class="item" v-for="skill in skills" :key="skill.id">
-        <skill :skill="skill" />
-      </li>
-    </ul>
+    <edit-line slot="title" v-model="categotyTitle" :editModeByDefault="empty" @remove="$emit('remove', $event)" />
+    <template slot="content">
+      <ul class="skills" v-if="empty === false">
+        <li class="item" v-for="skill in skills" :key="skill.id">
+          <skill :skill="skill" />
+        </li>
+      </ul>
+      <div class="bottom-line">
+        <skillAddLine :blocked="empty" />
+      </div>
+    </template>
   </card>
 </template>
 
@@ -13,24 +18,31 @@
 import card from "../card";
 import editLine from "../editLine";
 import skill from "../skill";
+import skillAddLine from "../skillAddLine";
 
-const skills = [
-  {id:0, title: "HTML", percent: 80},
-  {id:1, title: "JS", percent: 80},
-  {id:2, title: "CSS", percent: 80},
-]
+
 
 export default {
   components: {
     card, 
     editLine,
-    skill
-
+    skill,
+    skillAddLine
+  },
+  props: {
+    empty: Boolean,
+    title: {
+      type: String,
+      default: ""
+    },
+    skills: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {
-      title: "",
-      skills
+      categotyTitle: this.title,
     }
   }
 }
