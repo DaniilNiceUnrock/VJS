@@ -31,7 +31,7 @@ export const defaultView = () => ({
       :skills="skills"
       @remove="onRemove"
       @remove-skill="onRemoveSkill"
-      @edit-skill="onEditSkill"
+      @edit-skill="onEditSkill" 
     />
   `,
   methods

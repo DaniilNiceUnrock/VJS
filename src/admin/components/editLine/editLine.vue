@@ -11,12 +11,15 @@
         <app-input
           placeholder="Название новой группы"
           :value="value"
+          :class="{'warning' : warning}"
           :errorText="errorText"
           @input="$emit('input', $event)"
           @keydown.native.enter="onApprove"
           autofocus="autofocus"
           no-side-paddings="no-side-paddings"
+          v-model="title"
         ></app-input>
+         <div class="message">{{ validation.firstError('title') }}</div>
       </div>
       <div class="buttons">
         <div class="button-icon">
@@ -31,7 +34,18 @@
 </template>
 
 <script>
+import SimpleVueValidator from 'simple-vue-validator';
+const Validator = SimpleVueValidator.Validator;
+
+
+
 export default {
+  mixins: [SimpleVueValidator.mixin],
+  validators: {
+    'title': function(value) { 
+      return Validator.value(value).required("Заполните поле !");
+    },
+  },
   props: {
     value: {
       type: String,
@@ -42,23 +56,29 @@ export default {
       default: ""
     },
     editModeByDefault : Boolean,
-    blocked: Boolean
+    blocked: Boolean,
+    warning: Boolean
+
   },
   data() {
     return {
       editmode: this.editModeByDefault,
-      title: this.value
+      title: this.value // в режим редактирования даём текущий результат
     };
   },
   methods: {
+    
     onApprove() {
-      if (this.title.trim() === this.value.trim()) {
-        this.editmode = false;
+      if (this.title.trim() === this.value.trim() && this.title != "") {
+        console.log(this.title);
+        this.editmode = false; // делаем зновое
       } else {
-        this.$emit("approve", this.value);
+        this.warning = true;
+        this.$emit("approve", this.value); // не даём применить значение
       }
     }
   },
+  
   components: {
     icon: () => import("components/icon"),
     appInput: () => import("components/input")
