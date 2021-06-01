@@ -9,7 +9,7 @@
                         <btn type="square" title="Добавть работу"></btn>
                     </div>
                     <div class="reviews__item" v-for="review in reviews" :key="review.id">
-                        <card />
+                        <!--<card />
                         <template name="title">
                             <div class="review__head">
                                 <avatar size="2.7" :src="review.photo" class="review__avatar"/>
@@ -19,11 +19,53 @@
                                     </div>
                             </div>
                         </template>   
+                        <template id="content">
+                            <div class="rewiew__content">
+                                <div class="review__text"> {{review.text}}</div>
+                            </div>
+                            <div class="review__action">
+                                <div> btn </div>
+                            </div>
+                        </template>    -->
+
+                        <!--<div class="card-component">
+                            <div class="review__head">
+                                <avatar size="2.7" :src="review.photo" class="review__avatar"/>
+                                <div class="review__name">{{review.name}}</div>
+                                <div class="review__occ">{{review.occ}}</div>
+                            </div>
+                            <hr>
+                            </div>
+                                <div class="content">
+                                    <div class="rewiew__content">
+                                        <div class="review__text"> {{review.text}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <card>
+                            <template slot="title"> 
+                                <div class="review__head">
+                                    <avatar size="2.7" :src="review.photo" class="review__avatar"/>
+                                    <div class="review__head_info">
+                                        <div class="review__name">{{review.name}}</div>
+                                        <div class="review__occ">{{review.occ}}</div>
+                                    </div>
+                                </div>
+                            </template>
+                            <template slot="content"> 
+                                <div class="content">
+                                    <div class="rewiew__content">
+                                        <div class="review__text"> {{review.text}}</div>
+                                    </div>
+                                </div>
+                            </template>
+                        </card> 
                     </div>
                     
                 </div>
             </div>
-            
         </div>
         <router-view></router-view>
     </div>
@@ -76,5 +118,12 @@ export default {
         &:nth-child(3n) {
             margin-right: 0;
         }
+    }
+    .review__head {
+        display: flex;
+    }
+    .review__avatar {
+        margin-right: 20px;
+
     }
 </style>
