@@ -47,6 +47,14 @@ import user from "./components/user"
 import navigation from "./components/navigation"
 import button from "./components/button"
 import category from "./components/category"
+import axios from 'axios';
+
+const baseUrl =  "https://webdev-api.loftschool.com";
+const token = localStorage.getItem ('token') || "";
+axios.defaults.baseURL = baseUrl;
+
+axios.defaults.headers['Authorization'] = `bearer ${token}`;
+
 
 export default {
   components: {
@@ -58,12 +66,12 @@ export default {
   },
   data() {
     return {
-      categories: [],
+      //categories: [],
       emptyCatIsShown: false
     }
   },
    created() {
-     this.categories = require("./data/categories.json")
+     //this.categories = require("./data/categories.json")
    }
 };
 </script>

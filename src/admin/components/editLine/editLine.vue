@@ -36,6 +36,7 @@
 <script>
 import SimpleVueValidator from 'simple-vue-validator';
 const Validator = SimpleVueValidator.Validator;
+import  axios from 'axios';
 
 
 
@@ -69,14 +70,33 @@ export default {
   methods: {
     
     onApprove() {
-      if (this.title.trim() === this.value.trim() && this.title != "") {
-        console.log(this.title);
-        this.editmode = false; // делаем зновое
-      } else {
-        this.warning = true;
-        this.$emit("approve", this.value); // не даём применить значение
+      if(localStorage.getItem('token')) {
+        if (this.title.trim() === this.value.trim() && this.title != "") {
+            console.log(this.title);
+            //добавляем новую категорию
+            axios
+                .post('/categories', {
+                    title: this.title
+                }).then(response => {
+                this.categories.unshift(response.data);
+                $emit('remove');
+                }).catch(error=> {
+                  
+                    //alert(error.response.data.error);
+            });
+            
+            this.editmode = false; // делаем зновое
+          } else {
+            this.warning = true;
+            this.$emit("approve", this.value); // не даём применить значение
+          }
+      }
+      else {
+        alert('Вы не авторизованы');
+        this.$router.push(`/`);
       }
     }
+        
   },
   
   components: {

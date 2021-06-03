@@ -9,13 +9,15 @@
     <template slot="content">
       <ul class="skills" v-if="empty === false">
         <li class="item" v-for="skill in skills" :key="skill.id">
-          <skill :skill="skill" 
+          <skill 
+          :skill="skill" 
+          
           @remove="$emit('remove-skill', $event)"
           @approve="$emit('edit-skill', $event)" />
        </li>
       </ul>
       <div class="bottom-line">
-        <skill-add-line :blocked="empty"/>
+        <skill-add-line :blocked="empty" :categoryNewId="categoryId" @skillAdded="addSkill"/>
       </div>
     </template> 
   </card> 
@@ -39,6 +41,10 @@ export default {
       type: String,
       default: ""
     },
+    categoryId: {
+      type: Number,
+      default: 0
+    }, //++++
 
     skills: {
       type: Array,
@@ -48,8 +54,10 @@ export default {
 
   data() {
     return {
-      categoryTitle: this.title
+      categoryTitle: this.title,
     }
+  },
+  methods: {
   }
 }
 </script>

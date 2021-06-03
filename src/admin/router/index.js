@@ -14,21 +14,29 @@ const routes = [
         component: Error,
     },
     {
-        path: "/" ,
+        path: "" ,
+        component: () => import('../components/login/login.vue'),
+    },
+    {
+        path: "/about" ,
         component: () => import('../components/about.vue'),
-        beforeEnter: (to, from, next) => {
+        /*beforeEnter: (to, from, next) => {
             next(); // разрешаем переход
-        },
+        },*/
     },
     {
         path: "/works" ,
         component: () => import('../components/work.vue'),
         children: [
             {
-                path: 'profile',
+                path: '/works/profile',
                 component: userWorks
             }
         ]
+    },
+    {
+        path: "/newcategory",
+        component: () => import('../components/newcat/newcat.vue'),
     },
     {
         path: "/reviews" ,
@@ -36,8 +44,9 @@ const routes = [
     }
 ];
 
-const router = new Router({
-    routes,
-});
+//const router = new Router({
+//    routes,
+//});
+//export default router;
 
-export default router;
+export default new Router({ routes});
