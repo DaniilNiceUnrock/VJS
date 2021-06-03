@@ -4,7 +4,7 @@
             <slot /> 
             <div class="title"> {{title}}</div>
             <div class="buttons">
-                <button type="button" class="btn" @click="exitall">Выйти</button>
+                <button type="button" class="btn">Выйти</button>
             </div>
         </div>
     </div>
@@ -16,12 +16,6 @@ export default {
         title: {
             type: String,
             default: "Панель администратора"
-        }
-    },
-    methods: {
-        exitall() {
-            localStorage.removeItem('token');
-            this.$router.push(`/`);
         }
     }
 }

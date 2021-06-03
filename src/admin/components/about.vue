@@ -17,14 +17,11 @@
             </li>
             <li 
               class="item" 
-              v-for="cat in categories"
-              :key="cat.id">
+              v-for="category in categories"
+              :key="category.id">
             <category 
-              :title="cat.category"
-              :skills="cat.skills"
-              :categoryId="cat.id"
-            />
-            {{cat.id}}
+            :title="category.category"
+            :skills="category.skills"/>
             </li>
           </ul> 
         </div>
@@ -38,8 +35,6 @@ import user from "../components/user"
 import navigation from "../components/navigation"
 import button from "../components/button"
 import category from "../components/category"
-import  axios from 'axios';
-
 
 export default {
   components: {
@@ -56,16 +51,7 @@ export default {
     }
   },
    created() {
-     this.fetchCategories();
-     //this.categories = require("../data/categories.json")
-   },
-   methods : {
-      fetchCategories()  {
-            axios.get('/categories/457').then(response => {
-                this.categories = response.data
-            })
-      },
-
+     this.categories = require("../data/categories.json")
    }
 };
 </script>

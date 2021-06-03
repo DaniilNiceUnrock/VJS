@@ -7,7 +7,7 @@
           :class="['item', {active: link.active}]"
           :key="link.id"> 
           <!--<router-link :to="`/${link.alias}`" class="link">{{link.title}}</router-link> -->
-          <links @click="changePage(link.alias, link.id)" class="link"> {{link.title}}  </links>
+          <link1 @click="changePage(link.alias, link.id)" class="link"> {{link.title}}  </link1>
         </li>
       </ul>
     </div> 
@@ -17,7 +17,7 @@
 <script>
 
 const links = [
-    {id: 0, title: "Обо мне", alias: "about", active: true },
+    {id: 0, title: "Обо мне", alias: "", active: true },
     {id: 1, title: "Работы", alias: "works", active: false, },
     {id: 2, title: "Отзывы", alias: "reviews", active: false}
   ];

@@ -2,7 +2,6 @@
     <div class="skill-component" v-if="editmode === false">
         <div class="title">{{skill.title}}</div>
         <div class="percent">{{skill.percent}}%</div>
-        <div > 213</div>
         <div class="buttons">
             <icon symbol="pencil" @click="editmode = true" class="btn" grayscale/>
             <icon symbol="trash" class="btn" @click="$emit('remove', skill.id)" grayscale/>
@@ -32,7 +31,7 @@ export default {
             type  : Object ,
             default: () => {},
             required: true
-        }    
+        }
     },
     data () {
         return {
@@ -40,12 +39,9 @@ export default {
             currentSkill: { 
                 id  : 0,
                 title : this.skill.title,
-                percent: this.skill.percent,
+                percent: this.skill.percent
             }
         }
-    },
-    methods: {
-
     },
     components: {
         icon,
