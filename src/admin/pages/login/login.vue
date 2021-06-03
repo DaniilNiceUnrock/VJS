@@ -1,6 +1,7 @@
 <template>
   <div class="login-page-component">
     <div class="content">
+      <form class="form" @submit.prevent="handleSubmit">
         <div class="form-title">Авторизация</div>
         <div class="row">
           <app-input
