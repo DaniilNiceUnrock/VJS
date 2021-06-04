@@ -21,7 +21,7 @@
           />
         </div>
         <div class="btn">
-          <app-button  title="Отправить" />
+          <app-button :disabled="isSubmitDisabled" title="Отправить" />
         </div>
       </form>
     </div>
@@ -31,11 +31,9 @@
 import appInput from "../../components/input";
 import appButton from "../../components/button";
 import { Validator, mixin as ValidatorMixin } from "simple-vue-validator";
-import axios from "axios";
-const baseUrl =  "https://webdev-api.loftschool.com";
-const token = localStorage.getItem ('token') || "";
-axios.defaults.baseURL = baseUrl;
-axios.defaults.headers['Authorization'] = `bearer ${token}`;
+import axios from "../../requests";
+
+
 
 export default {
   mixins: [ValidatorMixin],
@@ -49,20 +47,30 @@ export default {
   },
   data: () => ({
     user: {
-      name: "",
-      password: "",
+      name: "DaniilPonomarev",
+      password: "090974Papa",
     },
+    isSubmitDisabled: false
   }),
   components: { appButton, appInput },
   methods: {
-      handleSubmit() {
-          this.$validate().then((isValid) => {
-              if (isValid === false) return;
-              axios.post("")
-              console.log('request');
-          });
-      }
-  },
+      async handleSubmit() {
+        if (await  this.$validate() ===  false) return; //  если валидация не прошла то мы не выполняем последующий код
+            this.isSubmitDisabled = true;
+              try {
+                const response = await axios.post("/login", this.user);
+
+                const token = response.data.token;
+                localStorage.setItem("token", token);
+                axios.defaults.headers['Authorization'] = `bearer ${token}`;
+                this.$router.replace('/'); 
+              } catch(error) {
+                alert(error.response.data.error)
+              } finally {
+                this.isSubmitDisabled = false;
+              }
+        },
+},
 };
 </script>
 

@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 import header from "./components/header";
 import about from "./pages/about";
 import login from "./pages/login";
-import login from "./pages/rewiews";
+import reviews from "./pages/reviews";
 
 const routes = [
   {
@@ -19,6 +19,13 @@ const routes = [
   {
     path: "/login",
     component: login,
+  },
+  {
+    path: "/reviews",
+    components: {
+      default: reviews,
+      header: header
+    },
   },
 ];
 

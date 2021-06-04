@@ -3,15 +3,26 @@
   :class="['skill-add-line-component', {blocked: blocked}]"
   >
     <div class="title">
-      <app-input v-model="skill.title" placeholder="Новый навык" />
-      <div class="message">{{ validation.firstError('skill.title') }}</div>
+      <app-input 
+        :errorMessage="validation.firstError('skill.title')"
+        v-model="skill.title" 
+        placeholder="Новый навык" 
+      />
+
     </div>
     <div class="percent">
-      <app-input v-model="skill.percent" type="number" min="0" max="100" maxlength="3" />
-      <div class="message">{{ validation.firstError('skill.percent') }}</div>
+      <app-input 
+        :errorMessage="validation.firstError('skill.percent')"
+        v-model="skill.percent" 
+        type="number" 
+        min="0" 
+        max="100" 
+        maxlength="3" 
+      />
+
     </div>
-      <div class="button" @click="submit">
-        <round-btn type="round" />
+      <div class="button">
+        <round-btn type="round"  @click="handleClick"/>
       </div>
   </div>
 </template>
@@ -19,29 +30,28 @@
 <script>
 import input from "../input";
 import button from "../button";
+import {Validator, mixin as ValidatorMixin} from 'simple-vue-validator';
 
-import SimpleVueValidator from 'simple-vue-validator';
-const Validator = SimpleVueValidator.Validator;
 
 
 export default {
-  mixins: [SimpleVueValidator.mixin],
+  mixins: [ValidatorMixin],
   validators: {
     'skill.title': function(value) {
-        
-        return Validator.value(value).required(alert('заполни поле с названием'));
-        
+        return Validator.value(value).required("Заполни!");
       },
-      'skill.percent': function(value) {
-         
-        return Validator.value(value).required(alert('заполни поле с процентами'));
-      },
+    'skill.percent': value => {
+      return Validator.value(value)
+        .integer('Только числа!')
+        .between(0, 100, "Только от 0 до 100")
+        .required('Зaполни!')
+    }
   },
   data() {
     return {
       skill: {
         title: "",
-        percent: ""
+        percent: "",
         }
     }
   },
@@ -53,16 +63,12 @@ export default {
     appInput: input,
   },
   methods: {
-    submit: function() {
-      this.$validate()
-        .then(function(success) {
-            console.log(success);
-          if (success) {
-            return
-          }
-        });
+      async handleClick() {
+        if (await this.$validate() === false) return;
+        this.$emit('approve', this.skill);
       }
   }
+
 }
 </script>
 
