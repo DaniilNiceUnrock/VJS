@@ -32,6 +32,7 @@ import appInput from "../../components/input";
 import appButton from "../../components/button";
 import { Validator, mixin as ValidatorMixin } from "simple-vue-validator";
 import axios from "../../requests";
+import { mapActions } from "vuex"
 
 
 
@@ -54,6 +55,9 @@ export default {
   }),
   components: { appButton, appInput },
   methods: {
+    ...mapActions({
+      showTooltip: "tooltips/show"
+    }),
       async handleSubmit() {
         if (await  this.$validate() ===  false) return; //  если валидация не прошла то мы не выполняем последующий код
             this.isSubmitDisabled = true;
@@ -64,12 +68,20 @@ export default {
                 localStorage.setItem("token", token);
                 axios.defaults.headers['Authorization'] = `bearer ${token}`;
                 this.$router.replace('/'); 
+                this.showTooltip({
+                  text: "Авторизация прошла успешно, добро пожаловать в админ панель !",
+                  type: "succes"
+                })
               } catch(error) {
-                alert(error.response.data.error)
+                this.showTooltip({
+                  text: error.response.data.error,
+                  type: "error"
+                })
+                //alert(error.response.data.error)
               } finally {
                 this.isSubmitDisabled = false;
               }
-        },
+      },
 },
 };
 </script>
