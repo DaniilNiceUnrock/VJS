@@ -9,6 +9,7 @@
       class="input__elem field__elem"
       v-bind="$attrs"
       :value="value"
+      v-on:focus="$emit('BlurTarget')"
       @input="$emit('input', $event.target.value)"
     />
     <div class="input__error-tooltip">

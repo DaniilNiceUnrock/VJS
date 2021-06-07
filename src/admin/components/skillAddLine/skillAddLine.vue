@@ -5,9 +5,9 @@
     <div class="title">
       <app-input 
         :errorMessage="validation.firstError('skill.title')"
-        @focusup="onKeyUpName()"
+        v-on:BlurTarget="onKeyUpName"
         v-model="skill.title" 
-        placeholder="Новый навык1" 
+        placeholder="Новый навык321" 
       />
 
     </div>
@@ -67,7 +67,11 @@ export default {
       showTooltip: "tooltips/show"
     }),
     onKeyUpName() {
-      console.log = (this.skill.title);
+      console.log('test blur');
+      if (this.skill.title  != "") {
+        this.skill.title = "";
+      }
+ 
     },
     async handleClick() {
       if (await this.$validate() === false) return;
