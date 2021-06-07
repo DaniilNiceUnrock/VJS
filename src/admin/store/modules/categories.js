@@ -19,9 +19,9 @@ export  default {
         REMOVE_SKILL: (state, skillToRemove) => {
             state.data = state.data.map(category => {
                 console.log(category.id);
-                console.log(skillToRemove.id);
+                console.log(skillToRemove.category);
 
-                if (category.id === skillToRemove.id) {
+                if (category.id === skillToRemove.category) {
                    //category.skills.filter(skill => skill.id != skillToRemove.id);
                     category.skills = category.skills.filter( skill =>  {
                         return skill.id != skillToRemove.id
