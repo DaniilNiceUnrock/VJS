@@ -5,8 +5,9 @@
     <div class="title">
       <app-input 
         :errorMessage="validation.firstError('skill.title')"
+        @focusup="onKeyUpName()"
         v-model="skill.title" 
-        placeholder="Новый навык" 
+        placeholder="Новый навык1" 
       />
 
     </div>
@@ -65,6 +66,9 @@ export default {
     ...mapActions({
       showTooltip: "tooltips/show"
     }),
+    onKeyUpName() {
+      console.log = (this.skill.title);
+    },
     async handleClick() {
       if (await this.$validate() === false) return;
       this.$emit('approve', this.skill);

@@ -96,8 +96,8 @@ export default {
           type: "succes"
       });
 
-      skill.title = "";
-      skill.percent = "";
+      skill.title = 'Имя скилла';
+      skill.percent = 0;
     },
     async removeSkill(skill) {
      await this.removeSkillAction(skill);
