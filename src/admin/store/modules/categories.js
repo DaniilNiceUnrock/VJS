@@ -6,7 +6,9 @@ export  default {
     mutations: {
         SET_CATEGORIES: (state, categories)  => (state.data = categories),
         ADD_CATEGORY: (state, category)  => state.data.unshift(category),
-        
+        DELETE_CATEGORY(state, id) {
+            state.categories = state.categories.filter(category => category.id !== id);
+        },
         ADD_SKILL:  (state, newSkill) => {
             state.data = state.data.map(category => {
                 //console.log(newSkill.category);
@@ -54,6 +56,14 @@ export  default {
            } catch (error) {
                 console.log(error);
            }
+        },
+        async deleteCategory(store, id) {
+            try {
+                await this.$axios.delete(`/categories/457`);
+                store.commit('DELETE_CATEGORY', 457);
+            } catch (error) {
+                throw new Error('Ошибка удаления категории');
+            }
         },
         async  fetch({commit}) {
             try {

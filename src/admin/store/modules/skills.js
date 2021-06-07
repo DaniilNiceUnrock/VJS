@@ -14,7 +14,7 @@ export default {
           const { data } = await this.$axios.delete(`/skills/${skillToRemove.id}`);
           commit("categories/REMOVE_SKILL", skillToRemove, { root: true });
         } catch (error) {
-          console.log(error);
+        console.log(error);
           //let err = new Error(error);
           throw err;
         }

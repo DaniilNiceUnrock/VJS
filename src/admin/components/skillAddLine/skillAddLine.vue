@@ -7,7 +7,7 @@
         :errorMessage="validation.firstError('skill.title')"
         v-on:BlurTarget="onKeyUpName"
         v-model="skill.title" 
-        placeholder="Новый навык321" 
+        placeholder="Новый навык" 
       />
 
     </div>
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       skill: {
-        title: "",
+        title: "Новый навык",
         percent: 0,
         }
     }
@@ -67,17 +67,21 @@ export default {
       showTooltip: "tooltips/show"
     }),
     onKeyUpName() {
-      console.log('test blur');
-      if (this.skill.title  != "") {
+
+      if (this.skill.title  === "Новый навык") {
         this.skill.title = "";
+        return;
       }
+      else {
+        
+      };
  
     },
     async handleClick() {
       if (await this.$validate() === false) return;
       this.$emit('approve', this.skill);
       this.showTooltip({
-        text: "Новый скилл добавлен !",
+        text: "Новый навык добавлен !",
         type: "succes"
       })
     }
