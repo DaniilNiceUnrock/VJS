@@ -11,7 +11,8 @@
         <app-input
           placeholder="Название новой группы"
           :value="value"
-          :errorText="errorText"
+          v-model="catnewname"
+          :errorMessage="validation.firstError('catnewname')"
           @input="$emit('input', $event)"
           @keydown.native.enter="onApprove"
           autofocus="autofocus"
@@ -31,7 +32,16 @@
 </template>
 
 <script>
+import { Validator, mixin as ValidatorMixin } from "simple-vue-validator";
+import { mapActions } from "vuex"
+
 export default {
+  mixins: [ValidatorMixin],
+  validators: {
+    "catnewname": (value) => {
+      return Validator.value(value).required("Введите название категории");
+    },
+  },
   props: {
     value: {
       type: String,
@@ -51,7 +61,8 @@ export default {
     };
   },
   methods: {
-    onApprove() {
+    async onApprove() {
+      if (await  this.$validate() ===  false) return;
       if (this.value.trim() === "") return false;
       if (this.title.trim() === this.value.trim()) {
         this.editmode = false;

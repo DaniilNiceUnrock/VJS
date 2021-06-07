@@ -48,8 +48,8 @@ export default {
   },
   data: () => ({
     user: {
-      name: "DaniilPonomarev",
-      password: "090974Papa",
+      name: "DaniilPonomarev0311",
+      password: "123456",
     },
     isSubmitDisabled: false
   }),
@@ -58,30 +58,30 @@ export default {
     ...mapActions({
       showTooltip: "tooltips/show"
     }),
-      async handleSubmit() {
-        if (await  this.$validate() ===  false) return; //  если валидация не прошла то мы не выполняем последующий код
-            this.isSubmitDisabled = true;
-              try {
-                const response = await axios.post("/login", this.user);
+    async handleSubmit() {
+      if (await  this.$validate() ===  false) return; //  если валидация не прошла то мы не выполняем последующий код <-
+          this.isSubmitDisabled = true;
+            try {
+              const response = await axios.post("/login", this.user);
 
-                const token = response.data.token;
-                localStorage.setItem("token", token);
-                axios.defaults.headers['Authorization'] = `bearer ${token}`;
-                this.$router.replace('/'); 
-                this.showTooltip({
-                  text: "Авторизация прошла успешно, добро пожаловать в админ панель !",
-                  type: "succes"
-                })
-              } catch(error) {
-                this.showTooltip({
-                  text: error.response.data.error,
-                  type: "error"
-                })
-                //alert(error.response.data.error)
-              } finally {
-                this.isSubmitDisabled = false;
-              }
-      },
+              const token = response.data.token;
+              localStorage.setItem("token", token);
+              axios.defaults.headers['Authorization'] = `bearer ${token}`;
+              this.$router.replace('/'); 
+              this.showTooltip({
+                text: "Авторизация прошла успешно, добро пожаловать в админ панель !",
+                type: "succes"
+              })
+            } catch(error) {
+              this.showTooltip({
+                text: error.response.data.error,
+                type: "error"
+              })
+              //alert(error.response.data.error)
+            } finally {
+              this.isSubmitDisabled = false;
+            }
+    },
 },
 };
 </script>

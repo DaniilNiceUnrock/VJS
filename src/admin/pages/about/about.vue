@@ -46,60 +46,96 @@
 <script>
     import button from "../../components/button"
     import category from "../../components/category"
+    import { Validator, mixin as ValidatorMixin } from "simple-vue-validator";
     import  { mapActions , mapState } from "vuex"
 
-    export default {
-    components: {
-        iconedButton: button,
-        category
-    },
-    data() {
-        return {
-            emptyCatIsShown: false
-        }
-    },
-    computed: {
-        ...mapState("categories", {
-            categories: state => state.data
-        })
-    },
-    methods: {
-        ...mapActions({
-            createCategoryAction: "categories/create",
-            fetchCategoryAction: "categories/fetch",
-            addSkillAction: "skills/add",
-            editSkillAction: "skills/edit",
-            removeSkillAction: "skills/remove",
-        }),
-        createCategory(categoryTitle) {
-            this.createCategoryAction(categoryTitle);
-        },
-        async createSkill(skill, categoryID) {
-            const newSkill = {
-                ...skill,
-                category: categoryID
-            }
-            //console.log('skill', skill);
-            await this.addSkillAction(newSkill);
-
-            skill.title = "";
-            skill.percent = "0";
-        },
-        async editSkill(skill) {
-            //console.log(skill);
-            await this.editSkillAction(skill);
-            skill.editmode = false;
-        },
-       async removeSkill(skill) {
-           await this.removeSkillAction(skill);
-        },
-    },
-    created() {
-        this.fetchCategoryAction();
-        this.categories
-        //this.categories = require("../../data/categories.json")
+export default {
+  mixins: [ValidatorMixin],
+  validators: {
+    'skill.title': function(value) {
+        return Validator.value(value).required("Заполни!");
+      },
+    'skill.percent': value => {
+      return Validator.value(value)
+        .integer('Только числа!')
+        .between(0, 100, "Только от 0 до 100")
+        .required('Зaполни!')
     }
+  },
+  components: {
+    iconedButton: button,
+    category,
+  },
+  data() {
+    return {
+      emptyCatIsShown: false,
     };
+  },
+  computed: {
+    ...mapState("categories",{
+      categories: state => state.data
+    })
+  },
+  methods: {
+    ...mapActions({
+      createCategoryAction: "categories/create",
+      fetchCategoriesAction: "categories/fetch",
+      addSkillAction: "skills/add",
+      removeSkillAction: "skills/remove",
+      editSkillAction: "skills/edit",
+      showTooltip: "tooltips/show"
+    }),
+    async createSkill(skill, categoryId) {
+      const newSkill = {
+        ...skill,
+        category: categoryId
+      }
+      await this.addSkillAction(newSkill);
+      this.showTooltip({
+          text: "Скилл Добавлен!",
+          type: "succes"
+      });
+
+      skill.title = "";
+      skill.percent = "";
+    },
+    async removeSkill(skill) {
+     await this.removeSkillAction(skill);
+     this.showTooltip({
+          text: "Скилл удалён!",
+          type: "succes"
+      });
+    },
+    async editSkill(skill) {
+      if (await  this.$validate() ===  false) return; //  если валидация не прошла то мы не выполняем последующий код <-
+      await this.editSkillAction(skill);
+      this.showTooltip({
+            text: "Скилл Изменён!",
+            type: "succes"
+        });
+      skill.editmode = false;        
+    },
+    async createCategory(categoryTitle) {
+      try {
+        await this.createCategoryAction(categoryTitle);
+        this.showTooltip({
+          text: "Категория успешно создана",
+          type: "succes"
+        });
+        this.emptyCatIsShown = false;
+      } catch (error) {
+        this.showTooltip({
+          text: "ops",
+          type: "error"
+        })
+        //console.log(error.message); 
+      }
+    }
+  },
+  created() {
+    this.fetchCategoriesAction();
+  },
+};
 </script>
 
 <style lang="postcss" scoped src="../../app.pcss"></style>

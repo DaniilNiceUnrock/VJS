@@ -31,8 +31,7 @@
 import input from "../input";
 import button from "../button";
 import {Validator, mixin as ValidatorMixin} from 'simple-vue-validator';
-
-
+import { mapActions } from "vuex"
 
 export default {
   mixins: [ValidatorMixin],
@@ -51,7 +50,7 @@ export default {
     return {
       skill: {
         title: "",
-        percent: "",
+        percent: 0,
         }
     }
   },
@@ -63,10 +62,17 @@ export default {
     appInput: input,
   },
   methods: {
-      async handleClick() {
-        if (await this.$validate() === false) return;
-        this.$emit('approve', this.skill);
-      }
+    ...mapActions({
+      showTooltip: "tooltips/show"
+    }),
+    async handleClick() {
+      if (await this.$validate() === false) return;
+      this.$emit('approve', this.skill);
+      this.showTooltip({
+        text: "Новый скилл добавлен !",
+        type: "succes"
+      })
+    }
   }
 
 }
