@@ -21,10 +21,7 @@
               :key="category.id">
             <category 
             :title="category.category"
-            :skills="category.skills"
-            @removecat="deleteCategory"
-            @remove="emptyCatIsShown = false"
-            />
+            :skills="category.skills"/>
             </li>
           </ul> 
         </div>
@@ -38,7 +35,6 @@ import user from "../components/user"
 import navigation from "../components/navigation"
 import button from "../components/button"
 import category from "../components/category"
-import { mapActions, mapState } from 'vuex';
 
 export default {
   components: {
@@ -54,38 +50,7 @@ export default {
       emptyCatIsShown: false
     }
   },
-  computed: {
-      ...mapState('categories', {
-          categories: state => state.categories
-      })
-  },
-  methods: {
-    ...mapActions({
-      deleteCategoryAction: 'categories/deleteCat',
-    }),
-    deleteCategory() {
-      console.log('Тест удаления категории');
-    },
-    /*async deleteCat(id) {
-    console.log("кнопка нажати удаления категории");
-      try {
-        await this.deleteCategoryAction(id);
-
-        this.showTooltip({
-            text: "Категория успешно удалена",
-            type: "success"
-        })
-      } catch (error) {
-          this.showTooltip({
-              text: error.response.data.error,
-              type: "error"
-          })
-      }            
-  },*/
-  },
-  
-  
-  created() {
+   created() {
      this.categories = require("../data/categories.json")
    }
 };

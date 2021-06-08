@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <router-view name="header" @logout="logout" />
+    <router-view name="header" />
     <router-view />
 
     <div :class="['notify-container', {active: isTooltipShown}]">
@@ -26,13 +26,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      logoutAction: 'user/userOut',
       hideTooltip: "tooltips/hide"
-    }),
-    async logout() {
-        await this.logoutAction();
-        this.$router.replace('/login');
-    }
+    })
   },
   computed: {
     ...mapState("tooltips", {

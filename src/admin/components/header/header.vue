@@ -1,6 +1,6 @@
 <template>
     <div class="header-component">
-        <headline title="Панель администрирования" @logout="$emit('logout')">
+        <headline title="Панель администрирования">
             <user />
         </headline>  
         <navigation />
