@@ -4,7 +4,7 @@
       slot="title"
       v-model="categoryTitle"
       :editModeByDefault="empty"
-      @remove="$emit('remove', $event)"
+      @removecategory="$emit('removecat')"
       @approve="$emit('approve', $event)"
     />
     <template slot="content">
@@ -52,6 +52,11 @@ export default {
     return {
       categoryTitle: this.title,
     };
+  },
+  methods: {
+    remove() {
+      alert("123");
+    }
   },
 };
 </script>

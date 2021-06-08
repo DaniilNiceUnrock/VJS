@@ -57,10 +57,10 @@ export  default {
                 console.log(error);
            }
         },
-        async deleteCategory(store, id) {
+        async deleteCat(store, id) {
             try {
-                await this.$axios.delete(`/categories/457`);
-                store.commit('DELETE_CATEGORY', 457);
+                await this.$axios.delete(`/categories/${id}`);
+                store.commit('DELETE_CATEGORY', id);
             } catch (error) {
                 throw new Error('Ошибка удаления категории');
             }
