@@ -39,7 +39,7 @@ export default {
   mixins: [ValidatorMixin],
   validators: {
     "catnewname": (value) => {
-      return Validator.value(value).required("Введите название категории");
+      return Validator.value(firstError).required("Введите название категории");
     },
   },
   props: {
