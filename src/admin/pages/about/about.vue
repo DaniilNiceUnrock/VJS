@@ -73,8 +73,8 @@ export default {
       }
       await this.addSkillAction(newSkill);
 
-      skill.title = "";
-      skill.percent = "";
+      skill.title = "Новый навык";
+      skill.percent = "0";
     },
     removeSkill(skill) {
       this.removeSkillAction(skill);
