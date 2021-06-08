@@ -1,6 +1,6 @@
 <template>
   <div class="user-component">
-    <avatar :size="4.5" :src="userPic" />
+    <avatar size="2.7" :src="userPic" />
     <div class="username">Daniil_Ponomarev</div>
   </div>
 </template>

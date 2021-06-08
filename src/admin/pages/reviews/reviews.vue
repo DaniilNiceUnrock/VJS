@@ -1,64 +1,66 @@
 <template> 
     <div class="reviews-container">   
-        <div class="content">
-            <div class="pageHeader"> 
-                <span class="h1">Блок 'Отзывы'</span>
-            </div>
+        <div class="reviews-container">   
+            <div class="content">
+                <div class="pageHeader"> 
+                    <span class="h1">Блок 'Отзывы'</span>
+                </div>
 
-            <card title="Новый отзыв" v-if="show">
-                <div class="content__newReviews" slot="content">
-                    <div class="content__photo">
-                        <avatar size="15" src="/src/images/content/avatar.png" class="review__avatar"/>
-                        <btn title="Загрузить фото" :plain="true"> </btn>
-                    </div>
-                    <div class="content__user_info">
-                        <div class="content__user_name">
-                            <span class="user__title">Имя автора</span>
-                            <input placeholder="Ковальчук Дмитрий" class="author_text"> 
+                <card title="Новый отзыв" v-if="show">
+                    <div class="content__newReviews" slot="content">
+                        <div class="content__photo">
+                            <avatar size="15" src="/src/images/content/avatar.png" class="review__avatar"/>
+                            <btn title="Загрузить фото" :plain="true"> </btn>
                         </div>
-                        <div class="content__user_name">
-                            <span class="user__title">Титул автора</span>
-                            <input placeholder="Основатель LoftSchool" class="author_text"> 
+                        <div class="content__user_info">
+                            <div class="content__user_name">
+                                <span class="user__title">Имя автора</span>
+                                <input placeholder="Ковальчук Дмитрий" class="author_text"> 
+                            </div>
+                            <div class="content__user_name">
+                                <span class="user__title">Титул автора</span>
+                                <input placeholder="Основатель LoftSchool" class="author_text"> 
+                            </div>
+                            <div class="content__user_text">
+                                <span class="user__title_text">Отзыв</span>
+                                <input placeholder="Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!" class="text"> 
+                            </div>
                         </div>
-                        <div class="content__user_text">
-                            <span class="user__title_text">Отзыв</span>
-                            <input placeholder="Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!" class="text"> 
+                        <div class="content__user_add">
+                            <btn title="Отмена"  :plain="true" @click="close_add"> </btn>
+                            <btn title="Добавить" @click="add"> </btn>
                         </div>
                     </div>
-                    <div class="content__user_add">
-                        <btn title="Отмена"  :plain="true" @click="close_add"> </btn>
-                        <btn title="Добавить" @click="add"> </btn>
+                    
+                </card>
+                <div class="reviews__list">
+                    <div class="reviews__add">
+                        <btn type="square" title="Добавть работу" @click="addNewReview"></btn>
                     </div>
-                </div>
-                
-            </card>
-            <div class="reviews__list">
-                <div class="reviews__add">
-                    <btn type="square" title="Добавть работу" @click="addNewReview"></btn>
-                </div>
-                <div class="reviews__item" v-for="review in reviews" :key="review.id">
-                    <card>
-                        <template slot="title"> 
-                            <div class="review__head">
-                                <avatar size="2.7" :src="review.photo" class="review__avatar"/>
-                                <div class="review__head_info">
-                                    <div class="review__name">{{review.name}}</div>
-                                    <div class="review__occ">{{review.occ}}</div>
+                    <div class="reviews__item" v-for="review in reviews" :key="review.id">
+                        <card>
+                            <template slot="title"> 
+                                <div class="review__head">
+                                    <avatar size="2.7" :src="review.photo" class="review__avatar"/>
+                                    <div class="review__head_info">
+                                        <div class="review__name">{{review.name}}</div>
+                                        <div class="review__occ">{{review.occ}}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </template>
-                        <template slot="content"> 
-                            <div class="rewiew__content">
-                                <div class="review__text"> {{review.text}}</div>
-                            </div>
-                            <div class="rewiew__actions">
-                                <icon title="Править"  symbol="pencil" class="review__edit" />
-                                <icon title="Удалить"  symbol="cross" class="review__cross" />
-                            </div>
-                        </template>
-                    </card> 
+                            </template>
+                            <template slot="content"> 
+                                <div class="rewiew__content">
+                                    <div class="review__text"> {{review.text}}</div>
+                                </div>
+                                <div class="rewiew__actions">
+                                    <icon title="Править"  symbol="pencil" class="review__edit" />
+                                    <icon title="Удалить"  symbol="cross" class="review__cross" />
+                                </div>
+                            </template>
+                        </card> 
+                    </div>
+                    
                 </div>
-                
             </div>
         </div>
     </div>
@@ -124,9 +126,9 @@ export default {
         margin-bottom: 30px;
         min-height: 350px;
         background: #fff;
-        &:nth-child(3n) {
-            margin-right: 0;
-        }
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
     }
     .review__head {
         display: flex;
