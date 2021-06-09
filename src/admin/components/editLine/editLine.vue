@@ -58,6 +58,7 @@ export default {
         } else {
           //Выполняем действия при изменении названия категории
           this.$emit("approve", this.value);
+          this.editmode = false;
         }
     },
   },
