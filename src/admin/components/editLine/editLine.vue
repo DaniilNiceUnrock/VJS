@@ -23,7 +23,7 @@
           <icon symbol="tick" @click="onApprove"></icon>
         </div>
         <div class="button-icon">
-          <icon symbol="cross" @click="$emit('removecategory')"></icon>
+          <icon symbol="cross" @click="$emit('remove', $event)"></icon>
         </div>
       </div>
     </div>
@@ -53,11 +53,12 @@ export default {
   methods: {
     onApprove() {
       if (this.value.trim() === "") return false;
-      if (this.title.trim() === this.value.trim()) {
-        this.editmode = false;
-      } else {
-        this.$emit("approve", this.value);
-      }
+        if (this.title.trim() === this.value.trim()) {
+          this.editmode = false;
+        } else {
+          //Выполняем действия при изменении названия категории
+          this.$emit("approve", this.value);
+        }
     },
   },
   components: {

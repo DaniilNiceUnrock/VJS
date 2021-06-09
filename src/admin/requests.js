@@ -17,7 +17,6 @@ axios.interceptors.response.use(
             return axios.post("/refreshToken")
             .then(response => {
                 const token = response.data.token;
-    
                 localStorage.setItem('token', token);
                 axios.defaults.headers["Authorization"] = `Bearer ${token}`;
                 originRequest.headers["Authorization"] = `Bearer ${token}`;

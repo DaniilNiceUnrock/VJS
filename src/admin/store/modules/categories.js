@@ -3,11 +3,20 @@ export  default {
     state: {
         data: []
     },
+ 
     mutations: {
-        SET_CATEGORIES: (state, categories)  => (state.data = categories),
+        SET_CATEGORIES: (state, categories)  => (state.data = categories) ,
         ADD_CATEGORY: (state, category)  => state.data.unshift(category),
-        DELETE_CATEGORY(state, id) {
-            state.categories = state.categories.filter(category => category.id !== id);
+        DELETE_CAT: (state, id) => {
+            state.data = state.categories.filter( category => category.id !== id )
+        },
+        EDIT_CATEGORY(state, editedCat) {
+            state.data = state.categories.map(category => {
+                if(category.id === editedCat.id) {
+                    category = editedCat;
+                }
+                return category;
+            })
         },
         ADD_SKILL:  (state, newSkill) => {
             state.data = state.data.map(category => {
@@ -18,6 +27,7 @@ export  default {
                 return category;
             })
         },
+        
         REMOVE_SKILL: (state, skillToRemove) => {
             state.data = state.data.map(category => {
                 //console.log(category.id);
@@ -49,6 +59,14 @@ export  default {
         }
     },
     actions: {
+        async  fetch({commit}) {
+            try {
+                const {data} = await this.$axios.get('/categories/461');
+                commit("SET_CATEGORIES",  data);
+            } catch (error) {
+             console.log(error);
+            }
+        },
        async  create({commit}, title) {
            try {
                const { data } = await this.$axios.post('/categories', {title});
@@ -57,22 +75,29 @@ export  default {
                 console.log(error);
            }
         },
-        async deleteCategory(store, id) {
+        async deleteCategory({commit}, id) {
             try {
-                await this.$axios.delete(`/categories/457`);
-                store.commit('DELETE_CATEGORY', 457);
+                await this.$axios.delete(`/categories/${id}`);
+                commit('DELETE_CAT', id);
             } catch (error) {
-                throw new Error('Ошибка удаления категории');
+                throw new Error('Ошибка удаления отзыва');
             }
-        },
-        async  fetch({commit}) {
-            try {
-                const {data} = await this.$axios.get('/categories/461');
-                commit("SET_CATEGORIES",  data);
+                /*const response = await this.$axios.delete(`/categories/${id}`);
                 console.log(response);
+                console.log(id);
+                commit('DELETE_CATEGORY', id);
+                console.log('test');*/
+
+        },
+        async editCategory({commit}, category) {
+            try {
+                const { data } = await this.$axios.post(`/categories/${category.id}`, {title: category.title});
+                commit('EDIT_CATEGORY', data);
             } catch (error) {
-             console.log(error);
+                throw new Error('Ошибка редактирования категории');
             }
         },
+        
+        
     }
 }

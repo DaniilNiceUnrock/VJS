@@ -3,15 +3,23 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
+import $axios from "./requests";
 import header from "./components/header";
 import about from "./pages/about";
 import works from "./pages/works";
 import reviews from "./pages/reviews";
 import login from "./pages/login";
 import store from "./store";
-import $axios from "./requests";
+
 
 const routes = [
+  {
+    path: "/login",
+    component: login,
+    meta: {
+        public: true
+    }
+  },
   {
     path: "/",
     components: {
@@ -39,64 +47,68 @@ const routes = [
         header: header
     },
     meta: {
-        title: "Отзывы"
+        title: "Отзывы",
     }
   },
-  {
-    path: "/login",
-    component: login,
-    meta: {
-        public: true
-    }
-  },
+  
 ];
 
 const router = new VueRouter({ routes });
 
-router.beforeEach(async (to, from, next) => {
-    // роут публичный, если в meta есть свойство public
-    const isPublicRoute = to.matched.some(record => record.meta.public);
-    const isUserLogged = store.getters["user/userIsLogged"];
+ 
 
-    if (!isUserLogged) {
-        const token = localStorage.getItem('token');
+router.beforeEach(async (to, from, next) => {   // router публичный, если есть  public
 
-        console.warn('[строка 64] isUserLogged is false');
+  const isPublicRoute = to.matched.some(record => record.meta.public); // записываем паблик
+  const isUserLogged = store.getters["user/userIsLogged"]; //  в сторе выполняем запрос на производное состояние  и записываем его 
+  
+  console.warn(isPublicRoute); // должно быть true
+  console.log('_____________');
+  console.warn(isUserLogged);
+  
+  if (!isUserLogged) { // go prev();
+    const token = localStorage.getItem('token'); // если пользователь авторизован то записываем в лс токен (получаем !false), то есть токен должен быть, если нет 
+    
+      console.warn('token:'+ token); // проверяем есть ли в токене token, если нет и адрес публичный true
+     
+      if (!token && isPublicRoute) {  
+          console.warn('isPublicRoute:'+ isPublicRoute);
+          next();
+      } else if (token) {  // если же токен у нас есть
+          console.warn('ТОКЕН ЕСТЬ! переход на страницу админки');
 
-        if (!token && isPublicRoute) {
-            console.warn('[строка 67] I\'is public route and the token was not found in localStorage');
-            next();
-        } else if (token) {
-            console.warn('[строка 70] token found in localStorage');
+          $axios.defaults.headers['Authorization'] = `Bearer ${ token }`; // проходим авторизцию
+      
+          try { // при успешной 
+              const response = await $axios.get('/user');  // получаем по запросу {user_id} - можно получить из запроса на /user (предоставив токен) (он у нас есть)
 
-            $axios.defaults.headers['Authorization'] = `Bearer ${ token }`;
-        
-            try {
-                const response = await $axios.get('/user');
+              store.commit("user/SET_USER", response.data.user); // добавляем юзера и если всё ок ->
 
-                store.commit("user/SET_USER", response.data.user);
+              console.warn('Пользователь добавлен успешно'); //(путь )
 
-                console.warn('[строка 79] The user\'s object was successfully fetched', from.path);
+              next();
 
-                next();
-
-                (from.path === "/login") ? next() : next({ path: from.path });
-            } catch (e) {
-                console.warn('[строка 85] The user\'s object was not fetched');
-                
-                localStorage.removeItem('token');
-
-                next('/login');
-            }
-        } else {
-            console.warn('[строка 92] token was not found in localStorage');
-            next('/login');
-        }
-    } else if (isPublicRoute && isUserLogged) {
-        next({ path: from.path });
-    } else {
-        next();
-    }
+              if(from.path === "/login")  {
+                next()
+              }
+              else {
+                next({ path: from.path });
+              }
+              // если же пользователь захочет нажать назад и попасть на авторизацию, можно по сути и пушить, но пускай так
+          } catch (error) {  // если ошибка, то перекидываем пользователя на авторизацю предварительно удалив токен
+              console.warn('перекидываем пользователя на авторизацю предварительно удалив токен');
+              localStorage.removeItem('token');
+              next('/login');
+          }
+      } else { // если нет токена
+          console.warn('когда токен попросту не найден');
+          next('/login'); //ведём на авторизацию  
+      }
+  } else if (isPublicRoute && isUserLogged) { // если всё норм, то пускай переходы по страницам будут !
+      next({ path: from.path });
+  } else {
+      next();
+  }
 });
 
 export default router;

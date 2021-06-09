@@ -53,6 +53,7 @@ export default {
       categoryTitle: this.title,
     };
   },
+
 };
 </script>
 

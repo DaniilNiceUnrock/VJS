@@ -1,47 +1,48 @@
-<template>
+<template> 
     <div class="reviews-container">   
         <div class="reviews-container">   
-            <!--
-            <pre>{{reviews}}</pre>
-            <pre>{{show}}</pre>
-            -->
             <div class="content">
-                
                 <div class="pageHeader"> 
                     <span class="h1">Блок 'Отзывы'</span>
                 </div>
 
-                <card title="Новый отзыв" v-if="show">
-                    <div class="content__newReviews" slot="content">
-                        <div class="content__photo">
-                            <avatar size="15" src="/src/images/content/avatar.png" class="review__avatar"/>
-                            <btn title="Загрузить фото" :plain="true"> </btn>
-                        </div>
-                        <div class="content__user_info">
-                            <div class="content__user_name">
-                                <span class="user__title">Имя автора</span>
-                                <input placeholder="Ковальчук Дмитрий" class="author_text"> 
+                <form @submit.prevent="handleSubmit">
+                    <card title="Новый отзыв" v-if="show">
+                        <div class="content__newReviews" slot="content">
+                            <div class="content__photo">
+                                <avatar size="15" src="/src/images/content/avatar.png" class="review__avatar"/>
+                                <btn title="Загрузить фото" :plain="true"> </btn>
                             </div>
-                            <div class="content__user_name">
-                                <span class="user__title">Титул автора</span>
-                                <input placeholder="Основатель LoftSchool" class="author_text"> 
+                            <div class="content__user_info">
+                                <div class="content__user_name">
+                                    <span class="user__title" :v-model="newReview.author">Имя автора</span>
+                                    <input placeholder="Ковальчук Дмитрий" class="author_text"> 
+                                </div>
+                                <div class="content__user_name">
+                                    <span class="user__title" :v-model="newReview.occ">Титул автора</span>
+                                    <input placeholder="Основатель LoftSchool" class="author_text"> 
+                                </div>
+                                <div class="content__user_text">
+                                    <span class="user__title_text" :v-model="newReview.text">Отзыв</span>
+                                    <input placeholder="Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!" class="text"> 
+                                </div>
                             </div>
-                            <div class="content__user_text">
-                                <span class="user__title_text">Отзыв</span>
-                                <input placeholder="Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!" class="text"> 
+                            <div class="content__user_add">
+                                <btn title="Отмена"  :plain="true" @click="close_add"> </btn>
+                                <btn title="Добавить" @click="add"> </btn>
                             </div>
                         </div>
-                        <div class="content__user_add">
-                            <btn title="Отмена"  :plain="true" @click="close_add"> </btn>
-                            <btn title="Добавить" @click="add"> </btn>
-                        </div>
-                    </div>
-                    
-                </card>
+                    </card>  
+                </form>
+                
+
+                
                 <div class="reviews__list">
                     <div class="reviews__add">
-                        <btn type="square" title="Добавть работу" @click="addNewReview"></btn>
+                        <btn type="square" title="Добавть отзыв" @click="addNewReview"></btn>
                     </div>
+
+
                     <div class="reviews__item" v-for="review in reviews" :key="review.id">
                         <card>
                             <template slot="title"> 
@@ -58,8 +59,8 @@
                                     <div class="review__text"> {{review.text}}</div>
                                 </div>
                                 <div class="rewiew__actions">
-                                    <icon title="Править"  symbol="pencil" class="review__edit" />
-                                    <icon title="Удалить"  symbol="cross" class="review__cross" />
+                                    <icon title="Править"  symbol="pencil" class="review__edit" @edit="edit" />
+                                    <icon title="Удалить"  symbol="cross" class="review__cross"  @remove="remove(review.id)" />
                                 </div>
                             </template>
                         </card> 
@@ -68,31 +69,48 @@
                 </div>
             </div>
         </div>
-        <router-view></router-view>
     </div>
 </template>
 
 <script>
 
+import { mapState, mapActions } from "vuex";
+import { Validator } from 'simple-vue-validator';
 
 export default {
     components: {
-       btn:()=> import('../components/button'),
-       card:()=> import('../components/card'),
-       avatar:()=> import('../components/avatar'),
-       icon:()=> import('../components/icon')
+       btn:()=> import('../../components/button'),
+       card:()=> import('../../components/card'),
+       avatar:()=> import('../../components/avatar'),
+       icon:()=> import('../../components/icon'),
     },
     data() {
         return {
-            reviews: [],
+           // reviews: [],
+            author: "",
+            occ: "",
+            text: "",
+            photo: {},
+            preview: "",
             show: false,
         };
     },
     created (){ 
-        let data = require('../../data/reviews.json');
-        this.reviews  = this.changeImagePath(data);
+       // let data = require('../../data/reviews.json');
+        //this.reviews  = this.changeImagePath(data);
+    },
+    computed: {
+        ...mapState("reviews", {
+        reviews: (state) => state.reviews,
+        }),
     },
     methods: {
+        ...mapActions({
+            getReviews: "reviews/get",
+            removeReview: "reviews/remove",
+            editReview: "reviews/edit",
+            showTooltip: "tooltips/show"
+        }),
         addNewReview() {
             if (this.show === false) {
                  this.show = true
@@ -113,6 +131,9 @@ export default {
             });
         },
     },
+    mounted() {
+        this.getReviews();
+    }
 }
 </script>
 
@@ -132,9 +153,9 @@ export default {
         margin-bottom: 30px;
         min-height: 350px;
         background: #fff;
-        &:nth-child(3n) {
-            margin-right: 0;
-        }
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
     }
     .review__head {
         display: flex;
