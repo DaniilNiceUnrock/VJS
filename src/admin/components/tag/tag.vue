@@ -1,16 +1,17 @@
 <template>
-  <div :class="['tag', {interactive: interactive}]">
+  <div 
+    :class="['tag', {interactive: interactive}]"
+  >
     <span>{{title}}</span>
-    <button v-on="$listeners" v-if="interactive" class="remove" type="button"></button>
+    <button 
+      v-on="$listeners"
+      v-if="interactive" 
+      class="remove" type="button"></button>
   </div>
-
-
 </template>
 
 <script>
-
 import icon from "../icon";
-
 export default {
   props: {
     title: {

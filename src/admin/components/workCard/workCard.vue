@@ -14,8 +14,8 @@
         </div>
         <a :href="work.link" class="link">{{work.link}}</a>
         <div class="btns">
-          <icon symbol="pencil" title="Править"></icon>
-          <icon symbol="trash" title="Удалить"></icon>
+          <icon symbol="pencil" title="Править" @click="edit()"></icon>
+          <icon symbol="trash" title="Удалить" @click="$emit('remove', currentWork)"></icon>
         </div>
       </div>
     </div>
@@ -28,10 +28,45 @@ import icon from "../icon";
 import tagsList from "../tagsList";
 
 export default {
-  components: { card, icon, tagsList },
+  components: { 
+        card, 
+        icon, 
+        tagsList 
+    },
   props: {
     work: Object,
   },
+  data() {
+      return {
+          currentWork: {
+              id: '',
+              title: '',
+              description: '',
+              link: '',
+              techs: '',
+              preview: ''
+          }
+      }
+  },
+  methods: {
+      edit() {
+          this.setCurrentWork();
+          this.$emit('edit', this.currentWork);
+      },
+      setCurrentWork() {
+          this.currentWork = {
+              id: this.work.id,
+              title: this.work.title,
+              description: this.work.description,
+              link: this.work.link,
+              techs: this.work.techs,
+              preview: `https://webdev-api.loftschool.com/${this.work.photo}`
+          }
+      }
+    },
+    created() {
+        this.setCurrentWork();
+    },
   computed: {
     cover() {
       return `https://webdev-api.loftschool.com/${this.work.photo}`

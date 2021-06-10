@@ -37,10 +37,10 @@
           </div>
           <div class="form-btns">
             <div class="btn">
-              <app-button title="Отмена" plain></app-button>
+              <app-button title="Отмена" @click="$emit('close', $event)" plain></app-button>
             </div>
             <div class="btn">
-              <app-button title="Сохранить" ></app-button>
+              <app-button title="Сохранить" :disabled="isSubmitDisabled"></app-button>
             </div>
           </div>
         </div>
@@ -54,13 +54,21 @@ import card from "../card";
 import appButton from "../button";
 import appInput from "../input";
 import tagsAdder from "../tagsAdder";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   components: { card, appButton, appInput, tagsAdder },
+  props: {
+    emptyCardIsShown: true,
+    currentWork: {
+      type: Object | null,
+      default: null
+    }
+  },
   data() {
     return {
       hovered: false,
+      isSubmitDisabled: false,
       newWork: {
         title: "",
         link: "",
@@ -71,16 +79,75 @@ export default {
       },
     };
   },
+  watch: {
+    currentWork() {
+      this.setWork();
+    }
+  },
+  created() {
+    this.setWork();
+  },
+  computed: {
+    ...mapState("works", {
+      works: (state) => state.works,
+    }),
+  },
   methods: {
     ...mapActions({
       addNewWork: "works/add",
+      editWork: "works/edit",
+      showTooltip: "tooltips/show"
     }),
     handleDragOver(e) {
       e.preventDefault();
       this.hovered = true;
     },
+    setWork() {
+      if(this.currentWork) {
+          this.newWork = { ...this.currentWork };
+      } 
+      else {
+        this.newWork = {
+          title: "",
+          link: "",
+          description: "",
+          techs: "",
+          photo: {},
+          preview: "",
+        }
+      }
+    },
     async handleSubmit() {
-      await this.addNewWork(this.newWork);
+      if(!this.newWork.id) {
+        try {
+            await this.addNewWork(this.newWork);
+            this.showTooltip({
+              text: "Работа успешно добавлена",
+              type: "success"
+            });
+            this.$emit('close');
+        } catch (error) {
+            this.showTooltip({
+              text: "Произошла ошибка",
+              type: "error"
+            })
+        }
+      } 
+      else {
+        try {
+            await this.editWork(this.newWork);                        
+            this.showTooltip({
+              text: "Работа успешно изменена",
+              type: "success"
+            });
+            this.$emit('close');
+        } catch (error) {
+            this.showTooltip({
+              text: "Произошла ошибка",
+              type: "error"
+            })
+        }
+      }
     },
     handleChange(event) {
       event.preventDefault();
@@ -100,6 +167,20 @@ export default {
       reader.onloadend = () => {
         this.newWork.preview = reader.result;
       };
+    },
+    setWork() {
+      if(this.currentWork) {
+          this.newWork = { ...this.currentWork };
+      } else {
+        this.newWork = {
+          title: "",
+          link: "",
+          description: "",
+          techs: "",
+          photo: {},
+          preview: "",
+        }
+      }
     },
   },
 };

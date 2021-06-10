@@ -1,32 +1,62 @@
-<template>
-    <div class="tags-adder-component">
-        <app-input title="Добавление тега" v-model="currentTags"  />
-        <ul class="tags">
-            <li class="tag" v-for="(tag,  index) in tagsArray" :key="`${tag}${index}`"  :v-if="tag.trim()">
-                <tag @click="removeTag(tag)" interractive :title="tag"/>
-            </li>
-        </ul>
-    </div>
+<template lang="pug">
+    .tags-adder-components 
+        addInput(
+            title="Добавление тега"
+            :value="currentTags"
+            @input="inputTags"
+            :error-message="errorMessage"
+        )
+
+            
+        ul.tags
+            li.tag(
+                v-if="tag.trim()"
+                v-for="(tag, index) in tagsArray" 
+                :key="`${tag}${index}`"
+                )
+                tag(
+                    interactive 
+                    :title="tag"
+                    @click="removeTag(tag)"
+                )
 </template>
 
-
 <script>
-import appInput from "../input";
+import addInput from "../input";
 import tag from "../tag";
 
 export default {
     components: {
-        appInput,
-        tag,
+        addInput,
+        tag
+    },
+    props: {
+        tags: {
+            type: String, 
+            default: ""
+        },
+        errorMessage: {
+            type: String,
+            default: ""
+        },
+    },
+    model: {
+        prop: "tags",
+        event: "change"
     },
     data() {
         return {
-            currentTags: "One, Two, three"
+            currentTags: this.tags
         }
     },
-    computed: { 
+    watch: {
+        tags() {
+            this.currentTags = this.tags;
+        }
+    },
+    computed: {
         tagsArray() {
-            return this.currentTags.trim().split(',');  
+            return this.currentTags.trim().split(',');
         }
     },
     methods: {
@@ -34,13 +64,26 @@ export default {
             const tags = [...this.tagsArray];
             const tagNdx = tags.indexOf(tag);
 
-            if(tagNdx < 0 ) return;
+            if(tagNdx < 0) return;
+
             tags.splice(tagNdx, 1);
-            this.cirrentTags  = tags.join(", ");
-        } 
+            this.currentTags = tags.join(", ");
+
+            this.$emit('change', this.currentTags);
+        },
+        inputTags(val) {
+            this.$emit('change', val);
+        }
     }
-};
+}
 </script>
 
-
-<style scoped  lang="postcss" src="./tagsAdder.pcss"></style>
+<style lang="postcss" scoped>
+    .tags {
+        display: flex;
+        margin-top: 20px;
+    }
+    .tag {
+        margin-right: 10px;
+    }
+</style>

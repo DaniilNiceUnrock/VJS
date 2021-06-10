@@ -1,7 +1,7 @@
 <template>
   <div class="about-page-component">
     <div class="page-content">
-      <div class="container" v-if="categories.length >= 0">
+      <div class="container" v-if="categories.length">
         <div class="header">
           <div class="title">Блок "Обо мне"</div>
           <iconedbutton
