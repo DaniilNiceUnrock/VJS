@@ -1,4 +1,6 @@
 import Vue from "vue";
+import axios from "axios";
+axios.defaults.baseURL  = "https://webdev-api.loftschool.com";
 
 const skillsItem = {
   props: ["skill"],
@@ -40,7 +42,8 @@ new Vue({
       skills: []
     }
   },
-  created() {
-    this.skills = require("../data/skills.json");
+  async created() {
+    const { data } = await axios.get("/categories/461");
+    this.skills = data;
   }
 });

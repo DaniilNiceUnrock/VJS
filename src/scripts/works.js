@@ -1,4 +1,6 @@
 import Vue from "vue";
+import axios from "axios";
+axios.defaults.baseURL  = "https://webdev-api.loftschool.com";
 
 const thumbs = {
     props: ["works", "currentWork"],
@@ -10,13 +12,13 @@ const btns = {
 };
 
 const display = {
-    props : ["currentWork", "works" , "currentSlideData"],
+    props : ["currentWork", "works" , "currentSlideData", "currentIndex"],
     template : "#preview-display",
     components : {thumbs, btns},
     computed: {
         reversedWorks() {
             const works = [...this.works];
-            return works.slice(0, 3).reverse();
+            return works.slice(0, 4).reverse();
         }
     }
 };
@@ -32,10 +34,12 @@ const info = {
     components : {tags},
     computed : {
         tagsArray() {
-            return this.currentWork.skills.split(",");
-        }
+            return this.currentWork.techs.split(",");
+        },
+        
     },
 };
+
 
 
 new Vue({
@@ -58,9 +62,9 @@ new Vue({
         },
     },
     //watch: {
-    //    currentIndex(value) {
-    //        this.makeInfiniteLoopForNdx(value);
-    //    },
+     //   currentIndex(value) {
+      //      this.makeInfiniteLoopForNdx(value);
+       // },
     //},
     methods: {
         makeInfiniteLoopForNdx(index) {
@@ -70,9 +74,10 @@ new Vue({
         },
         requireImagesToArra(data){
             return data.map(item=> {
-                const requiredImage = require(`../images/content/${item.photo}`).default;
+                //const requiredImage = require(`../images/content/${item.photo}`).default;
+                const requiredImage = `${axios.defaults.baseURL}/${item.photo}`;
                 item.photo = requiredImage;
-                return item
+                return item;
             });
         },
         slide(direction){
@@ -82,12 +87,12 @@ new Vue({
             
             switch(direction){
                 case "next" : 
-                    //this.currentIndex++
+                    this.currentIndex++
                     this.works.push(this.works[0]);
                     this.works.shift();
                     break;
                 case "prev" : 
-                    //this.currentIndex--
+                    this.currentIndex--
                     this.works.unshift(lastsItem);
                     this.works.pop();    
                     break;
@@ -100,9 +105,13 @@ new Vue({
             }  
         },
     },
-    created(){
-        const data = require("../data/works.json");
+    async created(){
+        //const data = require("../data/works.json");
+        const {data} = await axios.get('/works/461');
         this.works = this.requireImagesToArra(data);
-        //this.currentWork = this.works[this.currentIndex];
+        this.works = data;
+       // this.currentWork = this.works[this.currentIndex];
+        //console.log(this.currentWork);
     },
+    
 });
