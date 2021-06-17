@@ -25,7 +25,7 @@ script(type="text/x-template")#preview-display
             @leave="leave" 
             @after-leave="afterLeave"
         )
-            img(:key="currentWork.photo" :src="`${currentWork.photo}`").works-preview__img
+            img(:key="`${currentWork.photo}`" :src="`${currentWork.photo}`").works-preview__img
         .works-preview__thumbs 
             thumbs( 
                 :works="reversedWorks"

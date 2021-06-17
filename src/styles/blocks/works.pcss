@@ -190,8 +190,27 @@ svg.icon.arrow-top:hover {
 .animate__slideOutDown {
     animation: slide 9s;
 }
+
 .slider-out {
     animation: slideReverse .9s;
+}
+
+.animate__fadeInUp {
+    animation: solo .8s;
+}
+.animate__fadeInDown {
+    animation: solo2 .5s;
+}
+@keyframes solo { 
+    from  {
+        transform: translate(0%);
+    }
+    to {
+        transform: translate(100%);
+    }
+}
+@keyframes solo2 { 
+    
 }
 @keyframes slide {
     from {

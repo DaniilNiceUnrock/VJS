@@ -26,19 +26,19 @@ const display = {
     },
     methods: {
         beforeEnter(el) {
-            el.classList.add("animate__slideOutUp");
+            el.classList.add("animate__fadeInUp");
             console.log("beforeel");
         },
         afterEnter(el) {
-            el.classList.remove("animate__slideOutUp");
+            el.classList.remove("animate__fadeInUp");
             console.log("afterEnter");
         },
         leave(el) {
-            el.classList.add("animate__slideOutDown");
+            el.classList.add("animate__fadeInDown");
             console.log("leave");
         },
         afterLeave(el) {
-            el.classList.remove("animate__slideOutDown");
+            el.classList.remove("animate__fadeInDown");
             console.log("afterLeave");
         },
     }
