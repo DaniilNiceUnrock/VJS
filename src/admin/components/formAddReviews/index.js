@@ -1,1 +1,0 @@
-export {default} from "./formAddReviews.vue";
