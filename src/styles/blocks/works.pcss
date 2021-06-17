@@ -180,3 +180,34 @@ svg.icon.arrow-down:hover {
 svg.icon.arrow-top:hover {
     fill: #fff;
 }
+.slider-in {
+    animation: slide .9s;
+}
+.slider-out {
+    animation: slideReverse .9s;
+}
+@keyframes slide {
+    from {
+        left: -150px;
+    }
+    20% {
+        top: 20px;
+    }
+    50% {
+        left:  150px;
+    }
+    80% {
+        top: 0;
+    }
+    to {
+        left: 0;
+    }
+}
+@keyframes slideReverse {
+    from { 
+        left:  0;
+    }
+    to {
+       left: -10px;
+    }
+}

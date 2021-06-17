@@ -1,10 +1,13 @@
 import Vue from "vue";
 import axios from "axios";
 axios.defaults.baseURL  = "https://webdev-api.loftschool.com";
+import animate from "animate.css";
+
 
 const thumbs = {
     props: ["works", "currentWork"],
     template : "#preview-thumbs",
+   
 };
 
 const btns = {
@@ -18,9 +21,28 @@ const display = {
     computed: {
         reversedWorks() {
             const works = [...this.works];
-            return works.slice(0, 4).reverse();
+            return works.slice(0, 3).reverse();
         }
+    },
+    methods: {
+        beforeEnter(el) {
+            el.classList.add("animate__slideOutUp");
+            console.log("beforeel");
+        },
+        afterEnter(el) {
+            el.classList.remove("animate__slideOutUp");
+            console.log("afterEnter");
+        },
+        leave(el) {
+            el.classList.add("animate-hinge");
+            console.log("leave");
+        },
+        afterLeave(el) {
+            el.classList.remove("animate-hinge");
+            console.log("afterLeave");
+        },
     }
+    
 };
 
 const tags = {
