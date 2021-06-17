@@ -88,7 +88,7 @@ export default {
           })
       } catch (error) {
           this.showTooltip({
-              text: error.response.data.error,
+              text: "Ошибка добавления навыка",
               type: "error"
           })
       }
