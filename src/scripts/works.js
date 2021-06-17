@@ -34,11 +34,11 @@ const display = {
             console.log("afterEnter");
         },
         leave(el) {
-            el.classList.add("animate-hinge");
+            el.classList.add("animate__slideOutDown");
             console.log("leave");
         },
         afterLeave(el) {
-            el.classList.remove("animate-hinge");
+            el.classList.remove("animate__slideOutDown");
             console.log("afterLeave");
         },
     }
