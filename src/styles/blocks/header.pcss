@@ -10,6 +10,9 @@
         display: none !important;
     }
 }
+.socials.hamburger__socials  {
+    display: flex !important;  
+}
 .menu__list {
     display: flex;
     justify-content: center;
@@ -32,6 +35,9 @@
     text-align: center;
     line-height: 1;
     flex-basis: 400px;
+    @include phones {
+        font-size: 62px;
+    }
 }
 
 .userinfo__title {
@@ -51,19 +57,30 @@ a.logo {
     text-decoration: none;
     color: #464E62;
 }
-a.menu__link {
+.menu__link {
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 22px;
     text-decoration: none;
+    @include phones {
+        color: #fff;
+    }
 }
-a.menu__link:hover {
+
+.socials__icon {
+    @include phones {
+        
+        fill: #fff !important;
+    }
+}
+
+.menu__link:hover {
     color: #4b6fd7;
+    
 }
 .social__link:hover .socials__icon {
         fill: #4b6fd7;
-
 }
 
 .hamburger {
@@ -76,7 +93,7 @@ a.menu__link:hover {
     }
 
     & svg {
-        fill: #fff;
+        fill: #464e62;
     }    
 }
 
@@ -87,8 +104,9 @@ a.menu__link:hover {
     top: 60px;
     right: 45px;
     background: transparent;
-    fill: #414C63;
+    fill: #fff;
 }
+
 
 .menu-hamburger {
     display: none;
@@ -128,7 +146,7 @@ a.menu__link:hover {
             &__link {
                 font-size: 18px;
                 font-weight: 600;
-                color: #414C63;
+                color: #fff;
             }
         }
     }
