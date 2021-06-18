@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+.socials {
+    @include phones {
+        display: none !important;
+    }
+}
 .menu__list {
     display: flex;
     justify-content: center;
@@ -59,4 +64,72 @@ a.menu__link:hover {
 .social__link:hover .socials__icon {
         fill: #4b6fd7;
 
+}
+
+.hamburger {
+    width: 30px;
+    height: 26px;
+    display: none;
+
+    @include desktop {
+        display: block;
+    }
+
+    & svg {
+        fill: #fff;
+    }    
+}
+
+.ham-close-btn {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 60px;
+    right: 45px;
+    background: transparent;
+    fill: #414C63;
+}
+
+.menu-hamburger {
+    display: none;
+    width: 50%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 3;
+
+    @include tablets {
+        width: 100%;
+    }
+
+    &__wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 60px;
+        position: relative;
+        background: $text-color;
+
+        & .menu {
+            margin-bottom: 90px;
+
+            &__list {
+                flex-direction: column;
+            }
+
+            &__item {
+                margin-right: 0;
+                margin-bottom: 25px;
+            }
+
+            &__link {
+                font-size: 18px;
+                font-weight: 600;
+                color: #414C63;
+            }
+        }
+    }
 }

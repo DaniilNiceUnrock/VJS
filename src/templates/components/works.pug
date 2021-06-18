@@ -6,7 +6,7 @@ script(type="text/x-template")#preview-container
             :currentWork = "currentWork"
             :works="works"
             @slide="slide"
-            :currentSlideData = "currentSlideData"
+            :currentSlideData = "currentIndex"
             :currentIndex  = "currentIndex"
         )
         info(
@@ -18,14 +18,7 @@ script(type="text/x-template")#preview-container
 
 script(type="text/x-template")#preview-display
     .works-preview__pictures(:data-slide="currentIndex + 1")
-        transition-group(
-            tag="div" 
-            @before-enter="beforeEnter" 
-            @after-enter="afterEnter" 
-            @leave="leave" 
-            @after-leave="afterLeave"
-        )
-            img(:key="`${currentWork.photo}`" :src="`${currentWork.photo}`").works-preview__img
+        img(:src="`${currentWork.photo}`").works-preview__img
         .works-preview__thumbs 
             thumbs( 
                 :works="reversedWorks"

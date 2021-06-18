@@ -26,6 +26,10 @@
     display: flex;
     align-items: center;
     color: #464E62;
+    @include phones { 
+        text-align: left !important;
+        padding: 19px;
+    }
 }
 .values__content {
     text-align: -webkit-center;
@@ -39,11 +43,28 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     color: rgba(70,78,98,.8);
+    @include phones { 
+        width: 100% !important;
+    }
 }
 .values__content-text {
     text-align: left;
     padding-top: 6%;
-
+    @include phones { 
+        text-align: left !important;
+        padding: 19px;
+    }
+}
+.skill_item {
+    @include phones { 
+        margin-bottom: 30px;
+    }
+}
+.container.skills {
+    @include phones { 
+        max-width: 700px;
+    }
+    
 }
 ul.skills-row__list {
     display: flex;
@@ -53,6 +74,14 @@ ul.skills-row__list {
     justify-content: flex-end;
     margin-right: 21%;
     padding-top: 10%;
+    @include phones { 
+        display: block !important;
+    }
+}
+.skills-row {
+    @include phones { 
+        text-align: center;
+    }
 }
 .skill {
     position: relative;
@@ -88,6 +117,15 @@ ul.skills-row__list {
     line-height: 33px;
     align-items: center;
     color: #464E62;
+    @include phones {
+        margin-bottom: 15px;
+    }
+}
+.skills-row__list {
+    @include phones {
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
 }
 section.values {
     //margin-left: 15%;

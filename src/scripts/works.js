@@ -81,7 +81,7 @@ new Vue({
         currentSlideData() {
             return  this.works[this.currentIndex];
 
-        },
+        }
     },
     //watch: {
      //   currentIndex(value) {
@@ -89,11 +89,11 @@ new Vue({
        // },
     //},
     methods: {
-        makeInfiniteLoopForNdx(index) {
-            const worksNumber = this.works.lenght - 1;
-            if (index < 0) this.currentIndex = worksNumber;
-            if (index > worksNumber) this.currentIndex = 0;
-        },
+        //makeInfiniteLoopForNdx(index) {
+           // const worksNumber = this.works.lenght - 1;
+           // if (index < 0) this.currentIndex = worksNumber;
+           // if (index > worksNumber) this.currentIndex = 0;
+       // },
         requireImagesToArra(data){
             return data.map(item=> {
                 //const requiredImage = require(`../images/content/${item.photo}`).default;
@@ -109,12 +109,13 @@ new Vue({
             
             switch(direction){
                 case "next" : 
-                    this.currentIndex++
+                    
                     this.works.push(this.works[0]);
                     this.works.shift();
+                    this.currentIndex++;
                     break;
                 case "prev" : 
-                    this.currentIndex--
+                    this.currentIndex--;
                     this.works.unshift(lastsItem);
                     this.works.pop();    
                     break;

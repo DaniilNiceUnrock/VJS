@@ -4,9 +4,15 @@ section.about {
 }
 .about__container {
     display: flex;
+    @include phones {
+        display: contents !important;
+    }
 }
 .about__content {
     flex: 1;
+    @include phones { 
+        padding-left: 30px;
+    }
 }
 .iconed-link {
     display: inline-flex;
@@ -14,6 +20,10 @@ section.about {
 }
 .about__user {
     width: 41%;
+    @include phones {
+        width: 100% !important;
+        margin-bottom: 30px;
+    }
 }
 .user__avatar-style {
     display: flex;

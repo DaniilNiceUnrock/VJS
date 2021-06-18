@@ -21,6 +21,44 @@ block content
                                     a(href=`${item.href}` target="_blank").social__link
                                         +icon(item.title, "socials__icon")        
 
+                    .hamburger 
+                        +icon('hamburger', 'hamburger__icon')
+                    .menu-hamburger 
+                        .menu-hamburger__wrapper
+                            button.ham-close-btn
+                                +icon('close', 'ham-close-icon')
+                            nav.menu
+                                ul.menu__list.menu__list--ham
+                                    -
+                                        const menuHam = {
+                                            main: "Главная",
+                                            about: "Обо мне", 
+                                            skills: "Навыки", 
+                                            works: "Работы", 
+                                            reviews: "Отзывы"
+                                        };
+
+                                    each value, key in menuHam
+                                        li.menu__item.menu__item--ham
+                                            a(href=`#${key}`).menu__link.menu__link--ham #{value}
+                    
+                            ul.socials.hamburger__socials
+                                -
+                                    const socialHam = {
+                                        insta: "https://www.instagram.com/", 
+                                        vk: "https://www.facebook.com/", 
+                                        github: "https://github.com/", 
+                                        envelope: "mailto:mail@mail.com"
+                                    };
+
+                                each value, key in socialHam
+                                    li.socials__item
+                                        a(href=`${value}`).socials__link&attributes({'target': '_blank'})
+                                            +icon(key, 'socials__icon')
+
+
+
+
                 .userinfo 
                     .userinfo__title Личный сайт #[br] of the WEB-developer
                     .userinfo__name Daniil #[br] Ponomarev
@@ -62,7 +100,7 @@ block content
                 polygon(points="0,100  1000,100 1000,0")
 
         section.values(id="skills")   
-            .container  
+            .container.skills
                 .values__title
                     .values__content
                         p.values__title-text Чем я могу быть полезен Вам
