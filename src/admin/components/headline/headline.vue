@@ -4,7 +4,7 @@
             <slot /> 
             <div class="title"> {{title}}</div>
             <div class="buttons">
-                <button type="button" class="btn">Выйти</button>
+                <button type="button" class="btn"  @click="logout">Выйти</button>
             </div>
         </div>
     </div>
@@ -16,6 +16,11 @@ export default {
         title: {
             type: String,
             default: "Панель администратора"
+        }
+    },
+    methods: {
+         logout() {
+            this.$emit('logout');
         }
     }
 }
