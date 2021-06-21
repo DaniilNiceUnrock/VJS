@@ -1,5 +1,6 @@
 script(type="text/x-template")#preview-container 
     //pre {{works}}
+    //pre {{currentWork}} 
     .works-preview(v-if="works.length")
         display(
             :currentWork = "currentWork"
@@ -59,7 +60,6 @@ script(type="text/x-template")#preview-info
             p {{currentWork.description}}
         a(:href="currentWork.link" target="_blank").iconed-link  Посмотреть сайт 
             +image(`content/site.png`, "") 
-        pre {{currentWork}} 
 
 script(type="text/x-template")#preview-tags
     ul.tags 
