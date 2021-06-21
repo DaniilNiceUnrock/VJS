@@ -1,6 +1,5 @@
 script(type="text/x-template")#preview-container 
     //pre {{works}}
-    //pre {{currentWork}}
     .works-preview(v-if="works.length")
         display(
             :currentWork = "currentWork"
@@ -8,6 +7,7 @@ script(type="text/x-template")#preview-container
             @slide="slide"
             :currentSlideData = "currentIndex"
             :currentIndex  = "currentIndex"
+            :slideNumber = "slideNumber"
         )
         info(
             :currentWork = "currentWork"
@@ -17,7 +17,7 @@ script(type="text/x-template")#preview-container
     
 
 script(type="text/x-template")#preview-display
-    .works-preview__pictures(:data-slide="currentIndex + 1")
+    .works-preview__pictures(:data-slide="slideNumber + 1")
         img(:src="`${currentWork.photo}`").works-preview__img
         .works-preview__thumbs 
             thumbs( 
@@ -58,7 +58,8 @@ script(type="text/x-template")#preview-info
         .works-preview__desc 
             p {{currentWork.description}}
         a(:href="currentWork.link" target="_blank").iconed-link  Посмотреть сайт 
-            +image(`content/site.png`, "")  
+            +image(`content/site.png`, "") 
+        pre {{currentWork}} 
 
 script(type="text/x-template")#preview-tags
     ul.tags 

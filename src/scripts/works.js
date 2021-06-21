@@ -15,7 +15,7 @@ const btns = {
 };
 
 const display = {
-    props : ["currentWork", "works" , "currentSlideData", "currentIndex"],
+    props : ["currentWork", "works" , "currentSlideData", "currentIndex", "slideNumber"],
     template : "#preview-display",
     components : {thumbs, btns},
     computed: {
@@ -72,6 +72,7 @@ new Vue({
         return{
             works: [],
             currentIndex: 0,
+            slideNumber: 0
         };
     },
     computed: {
@@ -83,17 +84,17 @@ new Vue({
 
         }
     },
-    //watch: {
-     //   currentIndex(value) {
-      //      this.makeInfiniteLoopForNdx(value);
-       // },
+    // watch: {
+    //    currentIndex(value) {
+    //     this.makeInfiniteLoopForNdx(value);
+    // },
     //},
     methods: {
-        //makeInfiniteLoopForNdx(index) {
-           // const worksNumber = this.works.lenght - 1;
-           // if (index < 0) this.currentIndex = worksNumber;
-           // if (index > worksNumber) this.currentIndex = 0;
-       // },
+        makeInfiniteLoopForNdx(index) {
+           const worksNumber = this.works.lenght - 1;
+           if (index < 0) this.currentIndex = worksNumber;
+           if (index > worksNumber) this.currentIndex = 0;
+        },
         requireImagesToArra(data){
             return data.map(item=> {
                 //const requiredImage = require(`../images/content/${item.photo}`).default;
@@ -109,23 +110,27 @@ new Vue({
             
             switch(direction){
                 case "next" : 
-                    
+                    //this.currentIndex++;
+                    this.slideNumber++;
                     this.works.push(this.works[0]);
                     this.works.shift();
-                    this.currentIndex++;
+                    
+                    console.log(this.slideNumber);
                     break;
                 case "prev" : 
-                    this.currentIndex--;
+                   // this.currentIndex--;
+                   this.slideNumber--;
                     this.works.unshift(lastsItem);
                     this.works.pop();    
+                    console.log(this.slideNumber);
                     break;
             }
-            if (this.currentIndex  > lastslide) {
-                this.currentIndex = firstslide             
-            }  
-            if (this.currentIndex  < firstslide) {
-                this.currentIndex = lastslide             
-            }  
+             if (this.slideNumber  > lastslide) {
+                this.slideNumber = firstslide             
+             }  
+             if (this.slideNumber  < firstslide) {
+                this.slideNumber = lastslide             
+             }  
         },
     },
     async created(){
