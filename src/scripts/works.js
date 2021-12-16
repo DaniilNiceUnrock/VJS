@@ -135,7 +135,7 @@ new Vue({
     },
     async created(){
         //const data = require("../data/works.json");
-        const {data} = await axios.get('/works/461');
+        const {data} = await axios.get('/works/3');
         this.works = this.requireImagesToArra(data);
         this.works = data;
        // this.currentWork = this.works[this.currentIndex];

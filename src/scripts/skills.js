@@ -43,7 +43,7 @@ new Vue({
     }
   },
   async created() {
-    const { data } = await axios.get("/categories/461");
+    const { data } = await axios.get("/categories/3");
     this.skills = data;
   }
 });
