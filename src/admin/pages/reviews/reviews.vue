@@ -73,7 +73,7 @@ export default {
             this.emptyCardIsShown = false;
         }
     },
-     watch: {
+    watch: {
         emptyCardIsShown(){
             if(!this.emptyCardIsShown){
                 this.currentReview = null
